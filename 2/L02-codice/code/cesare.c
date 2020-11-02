@@ -14,9 +14,10 @@ int main() {
         scanf("%d", &c);
 
         for(i = 0; testo[i] != '\0'; i++) {
-                printf("%c", testo[i] + c);
+                //printf("%c", testo[i] + c);
+                putchar(testo[i] + c);
         }
 
         return 0;
 }
-//comportamento strano
+//comportamento strano: getchar prende anche i newline
