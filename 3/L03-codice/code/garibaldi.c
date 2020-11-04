@@ -18,3 +18,11 @@ int main() {
     printf( "\n" );
     return 0;
 }
+/*
+ * [1] 
+ * vocale = u
+ * output = gurubuldu fu furutu, fu furutu un unu gumbu
+ * [2] Se il carattere b è una vocale la sostuisce con il carattere a
+ * [3] Il programma sostituisce con un carattere a scelta dato dall'utente tutte le vocali di una stringa con questo carattere
+ *
+ */
