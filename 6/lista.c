@@ -1,10 +1,9 @@
+#include <cstddef>
 #include <stdio.h>
 #include <stdlib.h>
 
 struct node {
-  struct node *next;
-  int val;
-};
+  struct node *next; int val; };
 
 typedef struct node *Node;
 
@@ -134,6 +133,35 @@ void list_destroy_iter(Node l) {
         for (Node next = l->next; l != NULL && next->next != NULL; l = next, next = next->next) {
                 free(l);
         }
+}//3.5 è void perché non deve ritornare nulla dato che la lista viene cancellata
+
+struct node * olist_insert(int n, struct node *l) {
+        struct node * prev = NULL;
+        struct node * new = l;
+
+        for (; l != NULL && l->val < n; prev = l, l = l->next);
+        
+        if (prev != NULL) {
+                new = (struct node *) malloc(sizeof(struct node));
+                new->val = n;
+                new->next = prev->next;
+                prev->next = new;
+        }
+
+        return new;
 }
 
-//[5] è void perché non deve ritornare nulla dato che la lista viene cancellata
+struct node * olist_search(int n, struct node *l) {
+        /**
+         * Quando val > n
+         */
+        Node found = NULL;
+
+        for (; l != NULL && l->val < n; l = l->next);
+
+        if (l->val == n) {
+                found = l;
+        }
+
+        return found;
+}
