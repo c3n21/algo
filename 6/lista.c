@@ -165,3 +165,12 @@ struct node * olist_search(int n, struct node *l) {
 
         return found;
 }
+
+/**
+ * [Scheda due]
+ * [1] 1
+ * [2] d
+ * [3] se la lista è ordinata in ordine strettamente crescente
+ * [4] l'ultimo nodo ovvero quello con val = 1
+ * [5] restituisce un puntatore all'ultimo nodo della lista
+ */
