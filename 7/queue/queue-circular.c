@@ -18,42 +18,6 @@ struct s_queue {
 struct s_item {
         int el;
 };
-/**
- * {0, 1, 2, 3, 4}
- *  ^           
- *  f,r
- *
- *  [0]enqueue:
- *      size == 0 && size+1 < D_SIZE
- *
- * {0, 1, 2, 3, 4}
- *  ^  ^         
- *  f  r
- *
- *  [1]enqueue:
- *      r > f && r < D_SIZE
- *
- * {0, 1, 2, 3, 4}
- *  ^           ^
- *  f           r 
- *
- *  enqueue:
- *      r > f && r < D_SIZE && (r+1) % D_SIZE != f
- *
- *
- * {0, 1, 2, 3, 4} --> coda piena
- *  ^  ^         
- *  r  f
- *
- *  [0]enqueue:
- *      size == 0 && size+1 < D_SIZE
- *
- * {0, 1, 2, 3, 4} --> coda piena
- *  ^     ^         
- *  r     f
- *  enqueue:
- *      (size == 0 || r != f) && size < D_SIZE
- */
 
 Queue * queue() {
         Queue * new_queue   = (Queue *) malloc(sizeof(Queue));
@@ -113,9 +77,6 @@ int is_empty_queue ( Queue queue ) {
 // Print queue content
 void print_queue ( Queue queue ) {
         for (int i = 0, front = queue->front; i < queue->size; i++, front = (front+1) % QUEUE_SIZE) {
-//                printf("i = %d, item = %d\n", i, 
-//                                queue->items[(queue->front + i)%QUEUE_SIZE]->el);
-                
                 printf("i = %d, item = %d\n", i, (*queue).items[front]->el);
         }
 };

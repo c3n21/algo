@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define SIZE 30
+#define SIZE QUEUE_SIZE/2
 
 int main (int argc, char *args[]) {
         Queue * q = queue();
@@ -11,17 +11,23 @@ int main (int argc, char *args[]) {
         for (int i = 0; i < SIZE; i++) {
                 item = makeItem(i);
                 enqueue(*q, *item);
-                print_queue(*q);
+                //print_queue(*q);
         }
 
-        print_queue(*q);
+        //        for (int i = 0; i < SIZE; i++) {
+        //                *item = dequeue(*q);
+        //                //printItem(*item);
+        //                print_queue(*q);
+        //        }
 
         *item = dequeue(*q);
-         
-        printItem(*item);
-
+        for (int i = 0; i < SIZE; i++) {
+                item = makeItem(i);
+                enqueue(*q, *item);
+                //print_queue(*q);
+        }
+        //printItem(*item);
         print_queue(*q);
-        
         return 0;
 }
 
