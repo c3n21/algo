@@ -17,7 +17,9 @@ Item item_new(void *e) {
 }
 
 void item_print(Item item) {
-        printf("%d", item->element);
+        if (item != NULL) {
+                printf("%d", item->element);
+        }
 }
 
 void item_delete(Item item) {

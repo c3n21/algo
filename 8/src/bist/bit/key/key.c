@@ -1,4 +1,5 @@
 #include "key.h"
+#include <cstddef>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,7 +17,9 @@ Key key_new(void * e) {
 };
 
 void key_print(Key key) {
-        printf("%d", key->val);
+        if (key != NULL) {
+                printf("%d", key->val);
+        }
 };
 
 void key_delete(Key key) {

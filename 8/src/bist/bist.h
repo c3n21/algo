@@ -14,4 +14,5 @@ Item  bist_search ( Bit_node r, Key k );
 void  bist_insert( Bit_node *q, Item  item );
 int  bist_delete( Bit_node *r, Key k );
 
+Bit_node bist_new(Item item);
 #endif
