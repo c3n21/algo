@@ -25,3 +25,17 @@ void item_print(Item item) {
 void item_delete(Item item) {
         free(item);
 }
+
+int item_compare(Item item1, Item item2) {
+        int res = 0; //equals
+        
+        if (item1->element < item2->element) {
+                res = -1;
+        }
+
+        if (item1->element > item2->element) {
+                res = 1;
+        }
+
+        return  res;
+}
