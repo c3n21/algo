@@ -1,10 +1,11 @@
 #ifndef BIT_H
 #define BIT_H
-#include "../item/item.h"
+#include "item/item.h"
+#include "key/key.h"
 
-typedef struct s_bit_node Bit_node;
+typedef struct s_bit_node * Bit_node;
 
-Bit_node  bit_new( Item );
+Bit_node bit_new( Item item);
 void  bit_destroy( Bit_node  );
 Item  bit_item( Bit_node  );
 Bit_node  bit_left( Bit_node  );

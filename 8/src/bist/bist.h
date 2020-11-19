@@ -1,9 +1,6 @@
 #ifndef BIST_H
 #define BIST_H
-#include "../bit/bit.h"
-#include "../item/item.h"
-
-typedef struct s_key Key;
+#include "bit/bit.h"
 
 Item  bist_min( Bit_node p );
 Item  bist_max( Bit_node p );
