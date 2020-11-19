@@ -8,7 +8,7 @@ typedef struct s_queue * Queue;
 
 void printItem(Item item);
 
-Item * makeItem (int n);
+Item makeItem (int n);
 
 Queue * queue();
 // Put element on rear
