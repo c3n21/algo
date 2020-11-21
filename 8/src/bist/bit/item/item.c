@@ -1,5 +1,4 @@
 #include "item.h"
-#include "../key/key.h"
 #include <malloc.h>
 #include <stdio.h>
 #include "../../../debug.h"
@@ -26,6 +25,7 @@ void item_print(Item item) {
 }
 
 void item_delete(Item item) {
+        key_delete(item->key);
         free(item);
 }
 
@@ -63,4 +63,8 @@ int item_compare(Item item1, Item item2) {
         }
 
         return  res;
+}
+
+Key item_key(Item item) {
+        return item->key;
 }

@@ -12,6 +12,33 @@ struct s_bit_node {
         Bit_node parent;
 };
 
+void insert(Bit_node root, Item item) {
+
+        Bit_node cur = root; 
+        Bit_node tmp = cur;
+        int res = 0;        
+
+        do { //navigo l'albero
+                cur = tmp;
+                Item cur_it  = bit_item(tmp);
+                
+                if ((res = item_compare(cur_it, item)) <= 0) {
+                        tmp = bit_right(cur);
+                } else {
+                        tmp = bit_left(cur);
+                }
+                
+        }while (tmp != NULL);
+
+        Bit_node new = bit_new(item);
+        bit_setParent(new, cur);
+
+        if (res <= 0) { //inserisco
+                bit_setRight(cur, new);
+        } else {
+                bit_setLeft(cur, new);
+        }
+}
 Bit_node bit_new(Item item) {
         Bit_node new = (Bit_node)malloc(sizeof(struct s_bit_node));
         new->item = item;
@@ -26,6 +53,7 @@ void bit_destroy(Bit_node bt) {
         if (bt != NULL) {
                 bit_destroy(bt->left);
                 bit_destroy(bt->right);
+                item_delete(bt->item);
                 free(bt);
         }
 };
@@ -66,9 +94,23 @@ void bit_printassummary(Bit_node p, int spaces) {
                 printf("%c", BIT_PARAGRAPH);
                 item_print(p->item);
                 printf("\n");
-                bit_printassummary(p->right, spaces+BIT_SPACES_OFFSET);
-                bit_printassummary(p->left, spaces+BIT_SPACES_OFFSET);
+                bit_printassummary(p->right, spaces + BIT_SPACES_OFFSET);
+                bit_printassummary(p->left, spaces + BIT_SPACES_OFFSET);
         }
 };
 
-Bit_node bit_arr2tree(Item *a, int size, int i);
+Bit_node bit_arr2tree(Item *a, int size, int i) {
+        Bit_node root = NULL;
+
+        for (int i = 0; i < size; i++) {
+                Item item = item_new(&i);
+
+                if (root == NULL) {
+                        root = bit_new(item);
+                } else {
+                        insert(root, item);
+                }
+        }
+
+        return root;
+};
