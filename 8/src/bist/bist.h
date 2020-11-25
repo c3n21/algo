@@ -2,29 +2,33 @@
 #define BIST_H
 #include "bit/bit.h"
 
+typedef struct s_bist * Bist;
+
 /**
  * Creators
  */
-Bit_node bist_new(Item item);
+Bist bist_new(Item);
 
 /**
  * Destructors
  */
-int bist_delete( Bit_node *r, Key k );
+int bist_delete(Bist, Key);
 
-Item bist_min(Bit_node p);
-Item bist_max(Bit_node p);
+Bit_node bist_root(Bist);
+
+Item bist_min(Bist);
+Item bist_max(Bist);
 
 /*stampa  in  ordine  inverso:*/
-void bist_orderprint(Bit_node p);
+void bist_orderprint(Bist);
 
 /*stampa  in  ordine  inverso:*/
-void bist_invorderprint(Bit_node p);
-void bist_insert( Bit_node *q, Item  item );
+void bist_invorderprint(Bist);
+int bist_insert(Bist, Item);
 
 /**
  * Searching
  */
-Item bist_search(Bit_node p, Key k);
-int bist_searchparent(Bit_node, Key, Bit_node *, Bit_node *);
+Item bist_search(Bist, Key);
+int bist_searchparent(Bist, Key, Bist *, Bist *);
 #endif

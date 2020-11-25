@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#undef KEY_TYPE
-#define KEY_TYPE int
-
 struct s_key {
         KEY_TYPE val;
 };
@@ -23,4 +20,23 @@ void key_print(Key key) {
 
 void key_delete(Key key) {
         free(key);
+}
+
+int key_compare(Key key1, Key key2) {
+        if (key1 == key2) {//even if both are null
+                return 0;
+        }
+
+        if (key1 == NULL || key1->val < key2->val) {
+                return -1;
+        }
+        
+        return 1;
+}
+
+void * key_value(Key key) {
+        if (key != NULL) {
+                return &key->val;
+        }
+        return NULL;
 }

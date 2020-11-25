@@ -12,7 +12,7 @@ struct s_bit_node {
         Bit_node parent;
 };
 
-void insert(Bit_node root, Item item) {
+void bit_insert(Bit_node root, Item item) {
 
         Bit_node cur = root; 
         Bit_node tmp = cur;
@@ -39,6 +39,7 @@ void insert(Bit_node root, Item item) {
                 bit_setLeft(cur, new);
         }
 }
+
 Bit_node bit_new(Item item) {
         Bit_node new = (Bit_node)malloc(sizeof(struct s_bit_node));
         new->item = item;
@@ -103,12 +104,12 @@ Bit_node bit_arr2tree(Item *a, int size, int i) {
         Bit_node root = NULL;
 
         for (int i = 0; i < size; i++) {
-                Item item = item_new(&i);
+                Item item = a[i];
 
                 if (root == NULL) {
                         root = bit_new(item);
                 } else {
-                        insert(root, item);
+                        bit_insert(root, item);
                 }
         }
 

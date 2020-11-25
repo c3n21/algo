@@ -1,13 +1,15 @@
 #ifndef ITEM_H
 #define ITEM_H
+#define ITEM_TYPE int
 
 #include "../key/key.h"
 typedef struct s_item * Item;
 
-Item item_new(void * e);
-void item_print(Item item);
-void item_delete(Item item);
-int item_compare(Item item1, Item item2);
-Key item_key(Item item);
+Item item_new(void *, void *);
+void item_print(Item);
+void item_delete(Item);
+int item_compare(Item, Item);
+int item_value(Item);
+Key item_key(Item);
 
 #endif
