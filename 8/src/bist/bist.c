@@ -27,39 +27,6 @@ Bit_node bist_root(Bist root) {
         return NULL;
 }
 
-/*
- * @param root
- * @param item
- * @param found
- *
- * @return 1 if found, else 0
- *
- */
-int searchNode(Bit_node root, Item item, Bit_node found) {
-        if (root == NULL) {
-                return 0;
-        }
-
-        Item it = bit_item(root);
-
-        int cmp = item_compare(item, it);
-
-        if (cmp == 0) {
-                found = root;
-                return 1;
-        }
-
-        if (cmp == -1) { //item's value is less than it
-                return searchNode(bit_left(root), item, found);
-        }
-
-        if (cmp == 1) { //item's value is less than it
-                return searchNode(bit_right(root), item, found);
-        }
-
-        return 0;
-}
-
 Item bist_min(Bist p);
 Item bist_max(Bist p);
 
@@ -69,52 +36,50 @@ void bist_orderprint(Bist p);
 /*stampa  in  ordine  inverso:*/
 void bist_invorderprint(Bist p);
 
+/**
+ * 
+ * @param root
+ * @param item
+ *
+ * @return 
+ *
+ */
 int bist_insert(Bist root, Item item) {
         if (root != NULL) {
                 Bit_node cur_parent = NULL;
-                int cmp = 0; 
-                for (Bit_node cur_node = root->root; cur_node != NULL;) {
-                        Item cur_item = bit_item(cur_node);
-                        cur_parent = cur_node;
+                debug_print("[bist_insert] root = %p\n", root->root);
+                debug_print("[bist_insert] cur_parent = %p\n", cur_parent);
 
-                        cmp = item_compare(item, cur_item);
-
-
-                        if (cmp >= 0) {
-                                cur_node = bit_right(cur_node);
-
-                        } else if (cmp == -1) {
-                                cur_node = bit_left(cur_node);
-                        } else {
-                                debug_print("[bist_insert] Error detected in Items comparation, cmp = %d\n", cmp);
-                                return 0;
-                        }
-                }
-
+                int side = bist_searchparent(root, item, &cur_parent); 
 
                 if (cur_parent != NULL) {
-                        Bit_node new = bit_new(item);
+                        Bit_node new_node = bit_new(item);
 
-                        debug_print("[bist_insert] cur_parent = %p, left = %p, right = %p, cmp = %d\n", cur_parent, bit_left(cur_parent), bit_right(cur_parent), cmp);
+                        debug_print("[bist_insert] cur_parent = %p, left = %p, right = %p, side = %d\n",
+                                        cur_parent, bit_left(cur_parent), bit_right(cur_parent), side);
 
-                        if (cmp >= 0) {
-                                bit_setRight(cur_parent, new);
-
-                        } else if (cmp == -1) {
-                                bit_setLeft(cur_parent, new);
+                        if (side == 1){ //side == 1 is left child, side == 0 is right side
+                                debug_print("[bist_insert] setting new_node in left side\n");
+                                bit_setLeft(cur_parent, new_node);
+                        } else if (side == 0) {
+                                debug_print("[bist_insert] setting new_node in right side\n");
+                                bit_setRight(cur_parent, new_node);
                         } else {
-                                debug_print("[bist_insert] Error detected in Item insertion, cmp = %d\n", cmp);
-                                return 0;
+                                debug_print("[bist_insert] ERROR: no valid value on insert, side = %d\n", side);
+                                exit(1);
                         }
-                } else {
-                        return 0;
-                }
 
-                return 1;
+                        return 1;
+                } else {
+                        debug_print("[bist_insert] cur_parent is still NULL after bist_searchparent\n", cur_parent);
+                        exit(1);
+                }
         }
-        
+        debug_print("[bist_insert] Couldn't insert element\n");
         return -1;
 }
+
+
 
 //int bist_delete(Bist r, Key k) {
 //        Bist del, del_parent, sub = NULL;
@@ -153,7 +118,7 @@ int bist_insert(Bist root, Item item) {
 //
 //        return 0;
 //}
-//
+
 //Bist bist_new(Item item) {
 //        Bist new = (Bist) malloc(sizeof(struct s_bist));
 //
@@ -185,36 +150,55 @@ int bist_insert(Bist root, Item item) {
 //    return bit_item(p);
 //}
 //
-///**
-// * Search parent node for Key k
-// *
-// * @param Bist root
-// *
-// * @param Key k
-// *      key to look up for in the bist
-// *
-// * @param Bist *parent 
-// *      stores the parent of p
-// *
-// * @param Bist *found
-// *      contains the node corresponding with @param k
-// *
-// * @return int 1 if found, 0 if not found
-// */
-//
-//int bist_searchparent(Bist root, Key k, Bist *parent, Bist *found) {
-//    if (!root)
-//        return 0;
-//
-//    int res;
-//    *parent = NULL;
-//    *found = root;
-//
-//    while (*found && (res = key_compare(k, item_key(bit_item(*found)))) != 0) {
-//        *parent = *found;
-//        *found = res < 0 ? bit_left(*found) : bit_right(*found);
-//    }
-//    if (*found == NULL) /* non ci sono nodi con chiave k */
-//        return 0;
-//    return 1;
-//}
+/**
+ * Stores parent for the new child with Item item, and returns 1 if it will be left child or right child
+ *
+ * @param Bist root
+ *
+ * @param Key k
+ *      key to look up for in the bist
+ *
+ * @param Bist *parent 
+ *      stores the parent of p
+ *
+ * @param Bist *found
+ *      contains the node corresponding with @param k
+ *
+ * @return 1 if left child, 0 it's right child
+ */
+
+int bist_searchparent(Bist root, Item item, Bit_node * r_parent) {
+        if (root != NULL) {
+                *r_parent = root->root;
+                Bit_node cur_parent = NULL;
+                int cmp = 0;
+                for (Bit_node cur_node = root->root; cur_node != NULL;) {
+                        Item cur_item = bit_item(cur_node);
+                        cur_parent = cur_node;
+                        
+
+                        cmp = item_compare(item, cur_item);
+
+                        if (cmp >= 0) {
+                                cur_node = bit_right(cur_node);
+                                cmp = 0;
+                        } else if (cmp == -1) {
+                                cur_node = bit_left(cur_node);
+                                cmp = 1;
+                        } else {
+                                debug_print("[bist_searchparent] ERROR: Not valid value in Items comparation, cmp = %d\n", cmp);
+                                exit(1);
+                        }
+                }
+
+                if (cur_parent != NULL) {
+                        *r_parent = cur_parent;
+                        return cmp;
+                } else {
+                        debug_print("[bist_searchparent] ERROR: no adequate parent found\n");
+                        exit(1);
+                }
+        }
+        debug_print("[bist_searchparent] ERROR: root is NULL\n");
+        exit(1);
+}

@@ -66,15 +66,21 @@ Bit_node bit_left(Bit_node bt) { return bt->left; };
 Bit_node bit_right(Bit_node bt) { return bt->right; };
 
 void bit_setLeft(Bit_node bt, Bit_node left) {
-        bt->left = left;
+        if (bt != NULL) {
+                bt->left = left;
+        }
 }
 
 void bit_setRight(Bit_node bt, Bit_node right) {
-        bt->right = right;
+        if (bt != NULL) {
+                bt->right = right;
+        }
 }
 
 void bit_setParent(Bit_node bt, Bit_node parent) {
-        bt->parent = parent;
+        if (bt != NULL) {
+                bt->parent = parent;
+        }
 }
 
 void bit_printnode(Bit_node bt) {

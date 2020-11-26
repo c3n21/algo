@@ -13,3 +13,6 @@ test_bist: ./test_bist.c
 
 test_item: test_item.c
 	gcc -g -o test_item test_item.c ../src/bist/bit/item/item.c
+
+test_bt: ./test_bt.c
+	gcc -DDEBUG -g -rdynamic *.o -o test_bt test_bt.c

@@ -30,5 +30,5 @@ int bist_insert(Bist, Item);
  * Searching
  */
 Item bist_search(Bist, Key);
-int bist_searchparent(Bist, Key, Bist *, Bist *);
+int bist_searchparent(Bist, Item, Bit_node * r_parent);
 #endif
