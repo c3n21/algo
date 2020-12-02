@@ -1,14 +1,9 @@
 #ifndef PQUEUE_H
 #define PQUEUE_H
 #include "item.h"
+
 typedef struct pqueue * Pqueue ;
-
 typedef Item * Heap ;
-
-struct pqueue {
-        Heap h;
-        int size , count ;
-};
 
 /* crea una coda di priorità vuota che potrà contenere al massimo n Item */
 Pqueue pqueue_new ( int n );
