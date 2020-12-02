@@ -7,14 +7,16 @@ struct pqueue {
 };
 
 /* crea una coda di priorità vuota che potrà contenere al massimo n Item */
-Pqueue pqueue_new ( int n ) {
+Pqueue pqueue_new (int n) {
         Pqueue new = (Pqueue) malloc(sizeof(struct pqueue));
+        new->h     = (Heap) malloc(sizeof(Item)*n);
         new->count = 0;
         new->size  = n;
         return new;
 };
+
 /* distrugge la coda di priorità */
-void pqueue_destroy ( Pqueue ) {
+void pqueue_destroy (Pqueue queue) {
 
 };
 /* restituisce la lunghezza della coda di priorità */
