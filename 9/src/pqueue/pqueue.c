@@ -17,7 +17,8 @@ Pqueue pqueue_new (int n) {
 
 /* distrugge la coda di priorità */
 void pqueue_destroy (Pqueue queue) {
-
+        free(queue->h);
+        free(queue);
 };
 /* restituisce la lunghezza della coda di priorità */
 int pqueue_length ( Pqueue ) {
