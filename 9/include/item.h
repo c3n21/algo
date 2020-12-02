@@ -3,5 +3,7 @@
 
 typedef struct s_item {
         int value;      
-} Item;
+} * Item;
+
+int item_compare(Item, Item);
 #endif
