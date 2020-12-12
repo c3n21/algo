@@ -17,4 +17,6 @@ void pqueue_insert ( Pqueue , Item );
 Item pqueue_extractmin ( Pqueue );
 /* restituisce l’Item con chiave minima nella coda di priorità */
 Item pqueue_min ( Pqueue );
+
+void pqueue_sort(Item * a, int l, int r);
 #endif
