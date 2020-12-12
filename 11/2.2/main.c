@@ -40,24 +40,6 @@ int main() {
 }
 
 int fillBagAlgorithm(int P, Item *items, int m, int buffer[P+1][m+1]) { //primi m oggetti
-//        for (int i = 0; i < m; i++) {
-//                Item item = items[i];
-//
-//                for (int j = item.weight; j < P+1; j++) {
-//                        if (i > 0) {
-//                                int prev = items[i-1].weight;
-//                                printf("prev(%d) + item.weight(%d) = %d\n", prev, item.weight, prev+item.weight);
-//
-//                                if (prev + item.weight <= j) { //ci stanno entrambi
-//                                        printf("buffer[%d][%d] = %d + item.value(%d)\n", prev, i, buffer[prev][i], item.value);
-//                                        buffer[j][i+1] = buffer[prev][i] + item.value;
-//                                }
-//                        }
-//                        if (buffer[j][i+1] < item.value) {
-//                                buffer[j][i+1] = item.value;
-//                        }
-//                }
-//        }
         for (int i = 0; i < m; i++) {
                 for (int j = 0; j < P+1; j++) {
                         Item item = items[i];
